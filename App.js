@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Text, View, ActivityIndicator, TouchableOpacity } from "react-native";
 import styles from "./theme/styles";
 import fetchArtist from "./api/lastfmApi";
+import RootShareItOffNavigator from "./navigation/RootShareItOffNavigator";
 
 export default App = () => {
   // Define state
@@ -56,6 +57,7 @@ export default App = () => {
         {artistName}
         {artsistDescription}
       </Text>
+      <RootShareItOffNavigator/>
     </View>
   );
 };
