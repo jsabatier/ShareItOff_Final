@@ -7,24 +7,24 @@ import {
   TextInput,
 } from "react-native";
 import styles from "../theme/styles";
-import cocktailServ from "../api/cocktailService";
+import SongService from "../api/SongService";
 
-const SearchScreen = () => {
+const SearchScreen = (navigation) => {
   // Define state
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [cocktails, setCocktails] = useState([]);
-  const placeholder = `Chercher une chason ou un arstist`;
+  const [songs, setSongs] = useState([]);
+  const placeholder = `Chercher une chanson ou un arstist`;
 
   // Load a new cocktail
-  const loadCocktail = async (cocktailName) => {
+  const loadSong = async (songName) => {
     setLoading(true);
     setError(false);
 
     try {
-      const cocktails = await cocktailServ.searchCocktailsByName(cocktailName);
+      const songs = await SongService.searchSongsByName(songName);
       // Update state
-      setCocktails(cocktails);
+      setSongs(songs);
     } catch (e) {
       setError(true);
     }
@@ -57,11 +57,11 @@ const SearchScreen = () => {
       <TextInput
         style={styles.text}
         placeholder={placeholder}
-        onSubmitEditing={({ nativeEvent: { text } }) => loadCocktail(text)}
+        onSubmitEditing={({ nativeEvent: { text } }) => loadSong(text)}
       />
       <ErrorMessage></ErrorMessage>
       <FlatList
-        data={cocktails}
+        data={songs}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <Text>{item.name}</Text>}
       />
