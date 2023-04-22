@@ -1,13 +1,41 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
+import {useState, useEffect} from "react";
+import { View, Text, Button,ActivityIndicator } from "react-native";
 import styles from "../theme/styles";
+import UserService from "../api/UserService";
+import ArtistItem from "../components/ArtistItem";
 
 const ProfilScreen = ({ navigation }) => {
-  // Get the params
+  const [loading, setLoading] = useState(false);
+  const [topArtist, setTopArtist] = useState('');
+
+  const loadArtist = async()=>{
+    setLoading(true);
+    const artist=await UserService.getTopArtist();
+    // Update state when API results are available
+    setTopArtist(artist);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    loadArtist();
+  }, []);
+
+  let mainComponent;
+  if (loading)
+    mainComponent = (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  else
+    mainComponent = (
+      <ArtistItem artist={topArtist}/>
+    );
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>This is the profil screen</Text>
-      <Button title="Go to Home" onPress={() => navigation.navigate("Home")} />
+      {mainComponent}
     </View>
   );
 };

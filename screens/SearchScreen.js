@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  FlatList,
   ActivityIndicator,
   TextInput,
 } from "react-native";
 import styles from "../theme/styles";
 import SongService from "../api/SongService";
+import SongList from "../components/SongList"
 
 const SearchScreen = (navigation) => {
   // Define state
@@ -60,11 +60,7 @@ const SearchScreen = (navigation) => {
         onSubmitEditing={({ nativeEvent: { text } }) => loadSong(text)}
       />
       <ErrorMessage></ErrorMessage>
-      <FlatList
-        data={songs}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Text>{item.name}</Text>}
-      />
+      <SongList songs={songs} navigation={navigation} />
     </View>
   );
 };

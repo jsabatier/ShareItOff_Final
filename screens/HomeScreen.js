@@ -52,12 +52,12 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>This is the home bis screen</Text>
+      <Text style={styles.text}>This is the home screen</Text>
       <Button
         title="Go to Profil"
         onPress={() => navigation.navigate("Profil")}
       />
-      <Text style={styles.name}>
+      <Text style={styles.text}>
         {artistName}
         {artsistDescription}
       </Text>

@@ -1,41 +1,23 @@
 const rootEndpoint = "http://ws.audioscrobbler.com/2.0";
-
-// Model class for a song
-export class Song {
-  constructor(mbid, name, artistName, image) {
-    this.id = mbid;
-    this.name = name;
-    this.image = image;
-    this.artist.name = artistName;
-    this.album.image.small= image;
-  }
-}
-// Model class for an artist
-export class Artist {
-  constructor(mbid, name, artistName, image) {
-    this.id = mbid;
-    this.name = name;
-    this.image = image;
-    this.artist.name = artistName;
-    this.album.image.small= image;
-  }
-}
+const apiKey = "83920c6715670d2cf5294347ca609ba1";
+const user = "All_bi_mys3lf";
 
 class UserService {
-  async searchCSongsByName(name) {
-    const songs = await this.fetchFromApi(
-      `${rootEndpoint}/search.php?s=${name.trim()}`
-    );
-    return this.createSongs(songs);
+  async getFavoriteArtist() {
+    const artist = await this.fetch(
+      `${rootEndpoint}/?method=user.gettopartists&user=${user}&api_key=${apiKey}&format=json`,{method: "GET",}
+    ).catch((error) => {console.error(error);});;
+    return artist.topartists.track[0].name;
   }
 
-  async searchSongsByArtist(name) {
-    
-    const songs = await this.fetchFromApi(
-      `${rootEndpoint}/filter.php?i=${name.trim()}`
+  getTopArtist = async () => {
+    const response = await fetch(
+      `${rootEndpoint}/?method=user.gettopartists&user=${user}&api_key=${apiKey}&format=json`,{method: "GET",}
     );
-    return this.createCocktails(songs);
-  }
+    const data = await response.json();
+    // Access the object artist
+    return data.topartists.artist[0].name;
+  };
 
   async fetchFromApi(query) {
     console.log(`Fetching API with query ${query}`);
@@ -49,21 +31,6 @@ class UserService {
     }
   }
 
-  // Create a Cocktail model object from a subset of data fields returned by API
-  createCocktail(song) {
-    return new Song(
-      drink.idDrink,
-      drink.strDrink,
-      drink.strDrinkThumb,
-      drink.strInstructions
-    );
-  }
-
-  // Create a Cocktail model object list from the array returned by API
-  createCocktails(songs) {
-    // Create a cocktail object for each element in the array
-    return songs.map((song) => this.createCocktail(song));
-  }
 }
 
 export default new UserService();

@@ -2,20 +2,20 @@ const rootEndpoint = "http://ws.audioscrobbler.com/2.0";
 
 // Model class for a song
 export class Song {
-  constructor(id, name, image, instructions) {
+  constructor(id, name, artist, image) {
     this.id = id;
     this.name = name;
+    this.artist=artist;
     this.image = image;
-    this.thumbnail = image + "/preview";
-    this.instructions = instructions;
   }
 }
 
 class SongService {
-  async searchCSongsByName(name) {
+  async searchSongsByName(name) {
     const songs = await this.fetchFromApi(
-      `${rootEndpoint}/?method=track.search&track=${name.trim()}&api_key=83920c6715670d2cf5294347ca609ba1&format=json`
+      `${rootEndpoint}/?method=track.search&track=${name}&api_key=83920c6715670d2cf5294347ca609ba1&format=json`
     );
+    songs=songs.results.track;
     return this.createSongs(songs);
   }
 
@@ -24,7 +24,7 @@ class SongService {
     const songs = await this.fetchFromApi(
       `${rootEndpoint}/?method=artist.gettoptracks&artist=${name.trim()}&api_key=83920c6715670d2cf5294347ca609ba1&format=json`
     );
-    return this.createCocktails(songs);
+    return this.createSongs(songs);
   }
 
   async fetchFromApi(query) {
@@ -40,18 +40,18 @@ class SongService {
   }
 
   // Create a Cocktail model object from a subset of data fields returned by API
-  createCocktail(song) {
+  createSong(song) {
     return new Song(
-      drink.idDrink,
-      drink.strDrink,
-      drink.strDrinkThumb,
-      drink.strInstructions
+      song.idsong,
+      song.namesong,
+      song.artistsong,
+      song.imagesong
     );
   }
 
-  // Create a Cocktail model object list from the array returned by API
-  createCocktails(songs) {
-    // Create a cocktail object for each element in the array
+  // Create a song model object list from the array returned by last.fm
+  createSongs(songs) {
+    // Create a song object for each element in the array
     return songs.map((song) => this.createCocktail(song));
   }
 }

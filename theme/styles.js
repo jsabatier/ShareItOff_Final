@@ -5,15 +5,28 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
+  auth: {
+    flex: 1,
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     justifyContent: "center",
     margin: 30,
   },
+  containerItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    margin: 5,
+  },
   name: {
     fontSize: 18,
     fontWeight: "700",
     marginBottom: 10,
+  },
+  text: {
+    marginLeft: 10,
+    fontSize: 18,
   },
   description: {
     marginBottom: 10,

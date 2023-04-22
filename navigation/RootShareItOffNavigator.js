@@ -13,7 +13,7 @@ const Tab = createBottomTabNavigator();
 export default App = () => {
   return (
     <NavigationContainer>
-      <StatusBar barStyle="light-content" backgroundColor="#f4511e" />
+      <StatusBar barStyle="light-content" backgroundColor="#e41b23" />
       <Tab.Navigator
         screenOptions={({ route }) => ({
           // Icons will be different if the tab is focused
@@ -36,10 +36,10 @@ export default App = () => {
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: "tomato",
+          tabBarActiveTintColor: "#e41b23",
           tabBarInactiveTintColor: "gray",
           headerStyle: {
-            backgroundColor: "#f4511e",
+            backgroundColor: "#e41b23",
           },
           headerTintColor: "#fff",
           headerTitleStyle: {
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
 // Common stack header options
 const screenOptions = {
   headerStyle: {
-    backgroundColor: "#f4511e",
+    backgroundColor: "#e41b23",
   },
   headerTintColor: "#fff",
   headerTitleStyle: {
