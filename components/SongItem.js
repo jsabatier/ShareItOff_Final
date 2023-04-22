@@ -6,11 +6,6 @@ const SongItem = ({ song, navigation }) => {
     <View>
       <TouchableOpacity
         style={styles.container}
-        onPress={() => {
-          navigation.navigate("Detailssongs", {
-            songId: song.id,
-          });
-        }}
       >
         <Image source="${song.image}"/>
         <Text>

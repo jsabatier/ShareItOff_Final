@@ -1,18 +1,23 @@
 import React from "react";
-import { Text, View, TouchableOpacity} from "react-native";
-import styles from "../theme/styles"
+import { Text, View, TouchableOpacity, Image } from "react-native";
+import styles from "../theme/styles";
 
-const ArtistItem = ({ artist, navigation }) => {
-    return (
+const ArtistItem = ({ artist, playcount, image, navigation }) => {
+  return (
     <View>
-        <TouchableOpacity
-        style={styles.containerItem}
-        >
-        <Text style={styles.titre}>Artiste de la semaine</Text>
-        <Text>
-            {artist.image} - {artist.name}
-        </Text>
-        </TouchableOpacity>
+      <Text style={styles.titre}>Artiste de la semaine</Text>
+      <TouchableOpacity
+        style={styles.songContainer}
+        onPress={() => {
+          navigation.navigate("DescriptionScreen", {
+            artist: artist,
+          });
+        }}
+      >
+        <Image source={{ uri: "https://cdn-icons-png.flaticon.com/512/2908/2908584.png" }} style={{ width: 50, height: 50 }} />
+        <Text style={styles.text}>{artist}</Text>
+        <Text style={styles.tinytext}>Playcount : {playcount}</Text>
+      </TouchableOpacity>
     </View>
   );
 };

@@ -1,66 +1,58 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  ActivityIndicator,
-  TextInput,
-} from "react-native";
+import React, { useState } from 'react';
+import { View, TextInput, Button, FlatList, Text, Image,TouchableOpacity} from 'react-native';
 import styles from "../theme/styles";
-import SongService from "../api/SongService";
-import SongList from "../components/SongList"
 
-const SearchScreen = (navigation) => {
-  // Define state
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [songs, setSongs] = useState([]);
-  const placeholder = `Chercher une chanson ou un arstist`;
+const SearchScreen = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
-  // Load a new cocktail
-  const loadSong = async (songName) => {
-    setLoading(true);
-    setError(false);
+  const handleSearch = async () => {
+    if (searchTerm !== '') {
+      const apiKey = "83920c6715670d2cf5294347ca609ba1";
+      const url = `http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=${searchTerm}&api_key=${apiKey}&format=json`;
 
-    try {
-      const songs = await SongService.searchSongsByName(songName);
-      // Update state
-      setSongs(songs);
-    } catch (e) {
-      setError(true);
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const searchResults = data.results.artistmatches.artist;
+        setSearchResults(searchResults);
+      } catch (error) {
+        console.error(error);
+      }
     }
-
-    setLoading(false);
   };
 
-  if (loading) {
+  const renderSearchResult = ({ item }) => {
     return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" />
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+        <Image source={{ uri: "https://cdn-icons-png.flaticon.com/512/2908/2908584.png" }} style={{ width: 50, height: 50, marginRight: 10 }} />
+        <View>
+          <Text style={{ fontWeight: 'bold' }}>{item.name}</Text>
+          <Text>{item.listeners} écoutes</Text>
+        </View>
       </View>
     );
-  }
-
-  const ErrorMessage = () => {
-    if (error) {
-      return (
-        <View style={[styles.container, { alignItems: "center" }]}>
-          <Text>Something went wrong :\</Text>
-        </View>
-      );
-    } else {
-      return <></>;
-    }
   };
 
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1, padding: 20 }}>
       <TextInput
-        style={styles.text}
-        placeholder={placeholder}
-        onSubmitEditing={({ nativeEvent: { text } }) => loadSong(text)}
+        value={searchTerm}
+        onChangeText={setSearchTerm}
+        placeholder="Cherche un artist..."
+        style={{ marginBottom: 10, padding: 10, backgroundColor: '#f2f2f2' }}
       />
-      <ErrorMessage></ErrorMessage>
-      <SongList songs={songs} navigation={navigation} />
+      <Button
+        title="Chercher"
+        onPress={handleSearch}
+      />
+      <View style={{ flex: 1, marginTop: 20 }}>
+        <FlatList
+          data={searchResults}
+          renderItem={renderSearchResult}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </View>
     </View>
   );
 };

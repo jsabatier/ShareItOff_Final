@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import Input from "./Input";
 import authenticateUser from "../api/authentification";
+import styles from "../theme/styles";
 
 // The onLoginSuccessful prop is only necessary when linking authentication and module display
 const AuthForm = ({ onLoginSuccessful }) => {
@@ -24,7 +25,7 @@ const AuthForm = ({ onLoginSuccessful }) => {
   };
 
   const resetPassword = () => {
-    Alert.alert("Action sélectionnée", "Mise à jour du mot de passe");
+    Alert.alert("Action sélectionnée", "mail : test@test.fr / mdp : test");
   };
 
   const signUp = () => {
@@ -32,7 +33,7 @@ const AuthForm = ({ onLoginSuccessful }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.containerAuth}>
       <Image style={styles.formImage} source={require("../assets/last.fm.png")} />
       <Input
         placeholder="Email"
@@ -55,39 +56,10 @@ const AuthForm = ({ onLoginSuccessful }) => {
       <TouchableOpacity style={styles.buttonContainer} onPress={resetPassword}>
         <Text>Mot de passe oublié ?</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.buttonContainer} onPress={signUp}>
-        <Text>S'inscrire</Text>
-      </TouchableOpacity>
     </View>
   );
 };
 
 export default AuthForm;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#e41b23",
-  },
-  formImage: {
-    width: 100,
-    height: 100,
-    marginBottom: 20,
-  },
-  buttonContainer: {
-    height: 45,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 20,
-    width: 250,
-    borderRadius: 30,
-  },
-  signInButton: {
-    backgroundColor: "grey",
-  },
-  loginText: {
-    color: "white",
-  },
-});
+

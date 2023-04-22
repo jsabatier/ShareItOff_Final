@@ -1,24 +1,39 @@
 import React from "react";
-import { useState,useEffect } from "react";
-import { View, Text, ActivityIndicator,Button} from "react-native";
+import { useState, useEffect } from "react";
+import { View, Text, ActivityIndicator, Button } from "react-native";
 import styles from "../theme/styles";
-import fetchArtist from "../api/lastfmApi";
+import HomeService from "../api/HomeService";
+import SongList from "../components/SongList";
+import TrackItem from "../components/TrackItem";
 
 const HomeScreen = ({ navigation }) => {
   // Define state
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [artistName, setArtistName] = useState("");
-  const [artsistDescription, setArtistDescription] = useState("");
+  const [friends, setFriends] = useState([]);
+  const [friendsRecent, setFriendsRecent] = useState("");
 
-  const loadArtist = async () => {
+  const loadFriends = async () => {
     setLoading(true);
     setError(false);
 
     try {
-      const artist = await fetchArtist();
-      setArtistName(artist.name);
-      setArtistDescription(artist.bio.summary);
+      const friends = await HomeService.getFriends();
+      setFriends(friends);
+    } catch (e) {
+      setError(true);
+    }
+
+    setLoading(false);
+  };
+
+  const loadFriendsRecent = async () => {
+    setLoading(true);
+    setError(false);
+
+    try {
+      const friendsRecent = await HomeService.getFriendsRecent();
+      setFriendsRecent(friendsRecent);
     } catch (e) {
       setError(true);
     }
@@ -27,7 +42,8 @@ const HomeScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    loadArtist();
+    loadFriends();
+    loadFriendsRecent(friends);
   }, []);
 
   function load(loading) {
@@ -53,14 +69,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>This is the home screen</Text>
-      <Button
-        title="Go to Profil"
-        onPress={() => navigation.navigate("Profil")}
-      />
-      <Text style={styles.text}>
-        {artistName}
-        {artsistDescription}
-      </Text>
+      <TrackItem song={friendsRecent} />
     </View>
   );
 };

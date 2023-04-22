@@ -7,6 +7,7 @@ import HomeScreen from "../screens/HomeScreen";
 import ProfilScreen from "../screens/ProfilScreen";
 import SearchScreen from "../screens/SearchScreen";
 import TchatScreen from "../screens/TchatScreen";
+import DescriptionScreen from "../screens/DescriptionScreen";
 
 const Tab = createBottomTabNavigator();
 
