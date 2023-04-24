@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { View, Text, ActivityIndicator, Button, FlatList} from "react-native";
+import { View, Text, ActivityIndicator, Button, FlatList,Image} from "react-native";
 import styles from "../theme/styles";
 import HomeService from "../api/HomeService";
 
@@ -64,28 +64,36 @@ const HomeScreen = ({ navigation }) => {
     );
   }
 
-  const renderRecentTrack = ({ item }) => {
-    const image = item.image[2]['#text'] || null;
+  const renderRecentTrack = ( {item }) => {
+    console.log(item);
+    const image = item.image[0]['#text'] || null;
+    
     return (
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+      <View>
+        <Text></Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, padding: 5 }}>
         {image && <Image source={{ uri: image }} style={{ width: 50, height: 50, marginRight: 10 }} />}
         <View>
           <Text style={{ fontWeight: 'bold' }}>{item.name}</Text>
           <Text>{item.artist['#text']}</Text>
         </View>
       </View>
+      </View>
     );
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.screen}>
       <Text style={styles.titre}>Bienvenu sur ShareItOff !</Text>
+      
       <Text style={styles.text}> Voici les dernières musiques auquels vos amis écoutaient :</Text>
+      <View style={styles.padding}>
       <FlatList
       data={friendsRecentTracks}
       keyExtractor={(item) => item.url}
       renderItem={renderRecentTrack}
     />
+    </View>
     </View>
   );
 };
