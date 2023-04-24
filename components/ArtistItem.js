@@ -5,7 +5,7 @@ import styles from "../theme/styles";
 const ArtistItem = ({ artist, playcount, image, navigation }) => {
   return (
     <View>
-      <Text style={styles.titre}>Artiste de la semaine</Text>
+      
       <TouchableOpacity
         style={styles.songContainer}
         onPress={() => {
@@ -15,8 +15,10 @@ const ArtistItem = ({ artist, playcount, image, navigation }) => {
         }}
       >
         <Image source={{ uri: "https://cdn-icons-png.flaticon.com/512/2908/2908584.png" }} style={{ width: 50, height: 50 }} />
+        <View>
         <Text style={styles.text}>{artist}</Text>
         <Text style={styles.tinytext}>Playcount : {playcount}</Text>
+        </View>
       </TouchableOpacity>
     </View>
   );

@@ -38,18 +38,6 @@ class UserService {
     return data.recenttracks.track;
   };
 
-  async fetchFromApi(query) {
-    console.log(`Fetching API with query ${query}`);
-    try {
-      const response = await fetch(query);
-      // FIXME: JSON parse error when ingredient is not found
-      const content = await response.json();
-      return content.songs;
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
 }
 
 export default new UserService();

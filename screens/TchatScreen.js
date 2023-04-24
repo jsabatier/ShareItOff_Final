@@ -4,8 +4,8 @@ import styles from "../theme/styles";
 
 const TchatScreen = ({ navigation }) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>This is the tchat screen</Text>
+    <View style={styles.screen}>
+      <Text style={styles.text}>En construction ...</Text>
     </View>
   );
 };

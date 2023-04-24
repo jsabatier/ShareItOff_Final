@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, FlatList, Text, Image,TouchableOpacity} from 'react-native';
 import styles from "../theme/styles";
+import ArtistList from "../components/ArtistList";
 
 const SearchScreen = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -22,17 +23,7 @@ const SearchScreen = () => {
     }
   };
 
-  const renderSearchResult = ({ item }) => {
-    return (
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-        <Image source={{ uri: "https://cdn-icons-png.flaticon.com/512/2908/2908584.png" }} style={{ width: 50, height: 50, marginRight: 10 }} />
-        <View>
-          <Text style={{ fontWeight: 'bold' }}>{item.name}</Text>
-          <Text>{item.listeners} écoutes</Text>
-        </View>
-      </View>
-    );
-  };
+  
 
   return (
     <View style={{ flex: 1, padding: 20 }}>
@@ -47,11 +38,8 @@ const SearchScreen = () => {
         onPress={handleSearch}
       />
       <View style={{ flex: 1, marginTop: 20 }}>
-        <FlatList
-          data={searchResults}
-          renderItem={renderSearchResult}
-          keyExtractor={(item, index) => index.toString()}
-        />
+        <ArtistList
+        searchResults={searchResults}/>
       </View>
     </View>
   );

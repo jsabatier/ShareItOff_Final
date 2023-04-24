@@ -2,7 +2,7 @@ import React from "react";
 import { useState,useEffect } from "react";
 import { View, Text, ActivityIndicator,Button} from "react-native";
 import styles from "../theme/styles";
-import fetchArtist from "../api/lastfmApi";
+import fetchArtist from "../api/ArtisteService";
 
 const DescriptionScreen = ({ artist, navigation }) => {
   // Define state

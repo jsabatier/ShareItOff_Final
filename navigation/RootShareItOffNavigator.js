@@ -5,7 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/HomeScreen";
 import ProfilScreen from "../screens/ProfilScreen";
-import SearchScreen from "../screens/SearchScreen";
+import ArtistStackNavigator from"./ArtistStackNavigator"
 import TchatScreen from "../screens/TchatScreen";
 import DescriptionScreen from "../screens/DescriptionScreen";
 
@@ -49,7 +49,9 @@ export default App = () => {
         })}
       >
         <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Search" component={SearchScreen} />
+        <Tab.Screen name="Search"
+          component={ArtistStackNavigator}
+          options={{ title: "Recherche" }} />
         <Tab.Screen name="Tchat" component={TchatScreen} />
         <Tab.Screen name="Profil" component={ProfilScreen} />
       </Tab.Navigator>

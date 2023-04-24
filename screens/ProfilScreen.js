@@ -6,7 +6,7 @@ import UserService from "../api/UserService";
 import ArtistItem from "../components/ArtistItem";
 import TrackItem from "../components/TrackItem";
 import UserItem from "../components/UserItem";
-import SongList from "../components/SongList";
+import TrackList from "../components/TrackList";
 
 const ProfilScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -64,17 +64,6 @@ const ProfilScreen = ({ navigation }) => {
     setLoading(false);
   };
 
-  const renderItem = ({ item }) => {
-    return (
-      <View style={styles.songContainer}>
-        <View style={styles.padding2}>
-          <Text style={{ fontWeight: 'bold' }}>{item.name}</Text>
-          <Text>{item.artist['#text']}</Text>
-        </View>
-      </View>
-    );
-  };
-
   useEffect(() => {
     loadArtist();
     loadTrack();
@@ -99,11 +88,13 @@ const ProfilScreen = ({ navigation }) => {
         friends={userFriends}
         image={userImage}
       />
+      <Text style={styles.titre}>Artiste de la semaine</Text>
       <ArtistItem
         artist={topArtist}
         playcount={playcountArtist}
         image={imageArtist}
       />
+      <Text style={styles.titre}>Chanson de la semaine</Text>
       <TrackItem
         name={topTrack}
         artist={topTrackArtist}
@@ -111,10 +102,8 @@ const ProfilScreen = ({ navigation }) => {
         image={imageTrack}
       />
       <Text style={styles.titre}>Chansons récentes </Text>
-      <FlatList
-        data={songs}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
+      <TrackList
+        songs={songs}
       />
     </View>
   );
